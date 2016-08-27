@@ -282,10 +282,13 @@ namespace TaskmgrHigh
         async private static Task<string> get_outside_v4()
         {
             string ans = "";
+
             await Task.Run(() =>
                 {
+
                     try
                     {
+                        
                         string direction = "";
                         WebRequest request = WebRequest.Create("http://checkip.dyndns.org/");
                         request.Timeout = 10000;
@@ -297,12 +300,24 @@ namespace TaskmgrHigh
                         int first = direction.IndexOf("Address:") + 9;
                         int last = direction.LastIndexOf("</body>");
                         ans = direction.Substring(first, last - first);
+                        
+                        //string strUrl = "http://www.ip138.com/ip2city.asp"; //获得IP的网址了
+                        //Uri uri = new Uri(strUrl);
+                        //WebRequest wr = WebRequest.Create(uri);
+                        //Stream s = wr.GetResponse().GetResponseStream();
+                        //StreamReader sr = new StreamReader(s, Encoding.Default);
+                        //string all = sr.ReadToEnd(); //读取网站的数据
+                        //int i = all.IndexOf("[") + 1;
+                        //string tempip = all.Substring(i, 15);
+                        //ans = tempip.Replace("]", "").Replace(" ", "");
                     }
                     catch (Exception ex)
                     {
                         ans = "";
                     }
+
                 });
+
             return ans;
         }
 
