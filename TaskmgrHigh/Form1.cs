@@ -65,6 +65,12 @@ namespace TaskmgrHigh
         [DllImport("User32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, uint wParam, uint lParam);
+        const uint WM_APPCOMMAND = 0x319;
+        const uint APPCOMMAND_VOLUME_UP = 0x0a;
+        const uint APPCOMMAND_VOLUME_DOWN = 0x09;
+        const uint APPCOMMAND_VOLUME_MUTE = 0x08; 
 
         public Form1()
         {
@@ -98,6 +104,13 @@ namespace TaskmgrHigh
         void kh_OnKeyDownEvent(object sender, KeyEventArgs e)
         {
             if (e.KeyData == (Keys.T | Keys.Control | Keys.Alt)) { StartTMG(); }
+
+            if (e.KeyData == (Keys.Oemcomma | Keys.Control | Keys.Alt)) { min_vol(); }
+
+            if (e.KeyData == (Keys.OemPeriod | Keys.Control | Keys.Alt)) { add_vol(); }
+
+            if (e.KeyData == (Keys.OemQuestion | Keys.Control | Keys.Alt)) { inv_vol(); }
+
         }
 
         private void StartTMG()
@@ -320,6 +333,25 @@ namespace TaskmgrHigh
 
             return ans;
         }
+
+        private void add_vol()
+        {
+            //加音量 
+            SendMessage(this.Handle, WM_APPCOMMAND, 0x30292, APPCOMMAND_VOLUME_UP * 0x10000);
+        }
+
+        private void min_vol()
+        {
+            //减音量 
+            SendMessage(this.Handle, WM_APPCOMMAND, 0x30292, APPCOMMAND_VOLUME_DOWN * 0x10000);
+        }
+
+        private void inv_vol()
+        {
+            //静音 
+            SendMessage(this.Handle, WM_APPCOMMAND, 0x200eb0, APPCOMMAND_VOLUME_MUTE * 0x10000);
+        } 
+
 
     }
     public class Fixes
