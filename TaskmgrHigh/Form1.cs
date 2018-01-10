@@ -25,7 +25,7 @@ namespace TaskmgrHigh
 
     public partial class Form1 : Form
     {
-        Icon ico = new Icon("ICON.ico");
+        Icon ico;
         ContextMenu notifyContextMenu = new ContextMenu();
         KeyboardHook kh = new KeyboardHook();
         protected override void WndProc(ref Message m)
@@ -81,6 +81,13 @@ namespace TaskmgrHigh
         {
             try
             {
+                System.Reflection.Assembly thisExe;
+                thisExe = System.Reflection.Assembly.GetExecutingAssembly();
+
+                //TaskmgrHigh为程序集的命名空间
+                System.IO.Stream file_ico = thisExe.GetManifestResourceStream("TaskmgrHigh.ICON.ico");
+                ico = new Icon(file_ico);
+
                 notifyIcon1.Text = "TaskmgrHigh";
                 notifyIcon1.Icon = ico;
                 notifyIcon1.Text = "Right click me for more info.";
@@ -92,11 +99,12 @@ namespace TaskmgrHigh
                 ShowInTaskbar = false;
                 notifyIcon1.Visible = true;
                 Hide();
+                AutoStartUpButton.Checked = AutoStartup.Check();
                 //MessageBox.Show("启动成功！");
             }
-            catch
+            catch(Exception ex)
             {
-                MessageBox.Show("启动失败！");
+                MessageBox.Show("启动失败！\n"+ex.Message);
                 Close();
             }
         }
@@ -230,6 +238,7 @@ namespace TaskmgrHigh
             catch (Exception ex)
             {
                 //这里写异常的处理
+                //MessageBox.Show(ex.Message);
             }
             return ans;
         }
@@ -327,6 +336,7 @@ namespace TaskmgrHigh
                     catch (Exception ex)
                     {
                         ans = "";
+                        //MessageBox.Show(ex.Message);
                     }
 
                 });
@@ -350,9 +360,20 @@ namespace TaskmgrHigh
         {
             //静音 
             SendMessage(this.Handle, WM_APPCOMMAND, 0x200eb0, APPCOMMAND_VOLUME_MUTE * 0x10000);
-        } 
+        }
 
-
+        private void AutoStartUpButton_Click(object sender, EventArgs e)
+        {
+            if (AutoStartUpButton.Checked)
+            {
+                AutoStartup.Set(false);
+            }
+            else
+            {
+                AutoStartup.Set(true);
+            }
+            AutoStartUpButton.Checked = AutoStartup.Check();
+        }
     }
     public class Fixes
     {

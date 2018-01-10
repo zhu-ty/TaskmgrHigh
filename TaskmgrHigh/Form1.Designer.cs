@@ -32,8 +32,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.更新IP与MACToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AutoStartUpButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -47,16 +48,10 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.更新IP与MACToolStripMenuItem,
+            this.AutoStartUpButton,
             this.退出ToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 70);
-            // 
-            // 退出ToolStripMenuItem
-            // 
-            this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.退出ToolStripMenuItem.Text = "退出";
-            this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 92);
             // 
             // 更新IP与MACToolStripMenuItem
             // 
@@ -64,6 +59,20 @@
             this.更新IP与MACToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.更新IP与MACToolStripMenuItem.Text = "更新IP与MAC";
             this.更新IP与MACToolStripMenuItem.Click += new System.EventHandler(this.更新IP与MACToolStripMenuItem_Click);
+            // 
+            // AutoStartUpButton
+            // 
+            this.AutoStartUpButton.Name = "AutoStartUpButton";
+            this.AutoStartUpButton.Size = new System.Drawing.Size(152, 22);
+            this.AutoStartUpButton.Text = "开机启动";
+            this.AutoStartUpButton.Click += new System.EventHandler(this.AutoStartUpButton_Click);
+            // 
+            // 退出ToolStripMenuItem
+            // 
+            this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.退出ToolStripMenuItem.Text = "退出";
+            this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
             // 
             // timer1
             // 
@@ -91,6 +100,7 @@
         private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ToolStripMenuItem 更新IP与MACToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AutoStartUpButton;
     }
 }
 
