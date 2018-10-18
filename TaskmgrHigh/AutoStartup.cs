@@ -9,7 +9,7 @@ namespace TaskmgrHigh
     {
         static string Key = "TaskmgrHigh_" + Application.StartupPath.GetHashCode();
         static string RegistryRunPath = (IntPtr.Size == 4 ? @"Software\Microsoft\Windows\CurrentVersion\Run" : @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run");
-
+        //static string RegistryRunPath = @"Software\Microsoft\Windows\CurrentVersion\Run";
         private static string GetExecutablePath()
         {
             return System.Reflection.Assembly.GetExecutingAssembly().Location;
@@ -42,6 +42,7 @@ namespace TaskmgrHigh
         public static bool Set(bool enabled)
         {
             RegistryKey runKey = null;
+            //var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
             try
             {
                 string path = GetExecutablePath();

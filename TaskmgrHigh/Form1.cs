@@ -18,6 +18,7 @@ using Microsoft.Win32;
 using System.Reflection;
 using System.Management;
 
+
 namespace TaskmgrHigh
 {
 
@@ -25,6 +26,13 @@ namespace TaskmgrHigh
 
     public partial class Form1 : Form
     {
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool Wow64DisableWow64FsRedirection(ref IntPtr ptr);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        static extern bool Wow64RevertWow64FsRedirection(IntPtr ptr);
+
+
         Icon ico;
         ContextMenu notifyContextMenu = new ContextMenu();
         KeyboardHook kh = new KeyboardHook();
@@ -81,6 +89,15 @@ namespace TaskmgrHigh
         {
             try
             {
+                //MessageBox.Show(Environment.Is64BitProcess ? "x64" : "x86");
+                //if (!Environment.Is64BitProcess)
+                //{
+                //    string str = this.GetType().Assembly.Location; //result: X:\xxx\xxx\xxx.exe
+
+                //}
+
+
+
                 System.Reflection.Assembly thisExe;
                 thisExe = System.Reflection.Assembly.GetExecutingAssembly();
 
@@ -124,8 +141,17 @@ namespace TaskmgrHigh
         private void StartTMG()
         {
             Process myprocess = new Process();
-            //myprocess.PriorityClass = ProcessPriorityClass.High;
-            myprocess = Process.Start("Taskmgr.exe");
+
+            IntPtr wow64Value = IntPtr.Zero;
+
+            // Disable redirection.
+            Wow64DisableWow64FsRedirection(ref wow64Value);
+            string windir = System.Environment.GetEnvironmentVariable("windir");
+            myprocess = Process.Start(windir + @"\System32\Taskmgr.exe");
+
+            // Re-enable redirection.
+            Wow64RevertWow64FsRedirection(wow64Value);
+
             myprocess.PriorityClass = ProcessPriorityClass.High;
             ShowWindowAsync(myprocess.MainWindowHandle, 1);
             SetForegroundWindow(myprocess.MainWindowHandle);
