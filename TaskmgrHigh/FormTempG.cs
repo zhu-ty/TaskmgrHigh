@@ -41,7 +41,7 @@ namespace TaskmgrHigh
             var data = gt.Update();
             if(data.Count > 0)
             {
-                this.Size = new Size(300, data.Count * 50);
+                this.Size = new Size(300, 70 + data.Count * 25);
                 this.textBox1.Text = "";
                 for(int i = 0;i < data.Count; i++)
                 {
