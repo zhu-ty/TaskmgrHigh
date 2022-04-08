@@ -42,11 +42,15 @@ namespace TaskmgrHigh
             if(data.Count > 0)
             {
                 this.Size = new Size(300, 70 + data.Count * 25);
+                int maxLen = 0;
                 this.textBox1.Text = "";
                 for(int i = 0;i < data.Count; i++)
                 {
-                    this.textBox1.Text += data[i].type + " → " + data[i].temp + "\r\n";
+                    var t = data[i].type + " → " + data[i].temp;
+                    this.textBox1.Text += t + "\r\n";
+                    maxLen = (t.Length > maxLen) ? t.Length : maxLen;
                 }
+                this.Size = new Size(maxLen * 8, this.Size.Height);
                 this.textBox1.Text = this.textBox1.Text.Remove(this.textBox1.Text.LastIndexOf('\r'), 2);
             }
             else
