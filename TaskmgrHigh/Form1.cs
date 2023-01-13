@@ -18,7 +18,6 @@ using Microsoft.Win32;
 using System.Reflection;
 using System.Management;
 
-
 namespace TaskmgrHigh
 {
 
@@ -78,7 +77,11 @@ namespace TaskmgrHigh
         const uint WM_APPCOMMAND = 0x319;
         const uint APPCOMMAND_VOLUME_UP = 0x0a;
         const uint APPCOMMAND_VOLUME_DOWN = 0x09;
-        const uint APPCOMMAND_VOLUME_MUTE = 0x08; 
+        const uint APPCOMMAND_VOLUME_MUTE = 0x08;
+        const uint APPCOMMAND_MICROPHONE_VOLUME_MUTE = 24;
+        const uint APPCOMMAND_MICROPHONE_VOLUME_DOWN = 25;
+        const uint APPCOMMAND_MICROPHONE_VOLUME_UP = 26;
+
 
         public Form1()
         {
@@ -150,6 +153,12 @@ namespace TaskmgrHigh
             if (e.KeyData == (Keys.OemPeriod | Keys.Control | Keys.Alt)) { add_vol(); }
 
             if (e.KeyData == (Keys.OemQuestion | Keys.Control | Keys.Alt)) { inv_vol(); }
+
+            //if (e.KeyData == (Keys.L | Keys.Control | Keys.Alt)) { min_mic(); }
+
+            //if (e.KeyData == (Keys.OemSemicolon | Keys.Control | Keys.Alt)) { max_mic(); }
+
+            //if (e.KeyData == (Keys.OemQuotes | Keys.Control | Keys.Alt)) { inv_mic(); }
 
         }
 
@@ -401,6 +410,24 @@ namespace TaskmgrHigh
         {
             //静音 
             SendMessage(this.Handle, WM_APPCOMMAND, 0x200eb0, APPCOMMAND_VOLUME_MUTE * 0x10000);
+        }
+
+        private void max_mic()
+        {
+            //加麦克风
+            SendMessage(this.Handle, WM_APPCOMMAND, 0x30292, APPCOMMAND_MICROPHONE_VOLUME_UP * 0x10000);
+        }
+
+        private void min_mic()
+        {
+            //减麦克风
+            SendMessage(this.Handle, WM_APPCOMMAND, 0x30292, APPCOMMAND_MICROPHONE_VOLUME_DOWN * 0x10000);
+        }
+
+        private void inv_mic()
+        {
+            //静麦克风
+            SendMessage(this.Handle, WM_APPCOMMAND, 0x200eb0, APPCOMMAND_MICROPHONE_VOLUME_MUTE * 0x10000);
         }
 
         private void AutoStartUpButton_Click(object sender, EventArgs e)
